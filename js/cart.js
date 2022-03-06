@@ -1,8 +1,29 @@
-import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js';
+
+// import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.26/vue.esm-browser.min.js';
+
+// 加入vee-validation
+const { defineRule, Form, Field, ErrorMessage, configure } = VeeValidate;
+const { required, email, min, max } = VeeValidateRules;
+const { localize, loadLocaleFromURL } = VeeValidateI18n;
+
+defineRule('required', required);
+defineRule('email', email);
+defineRule('min', min);
+defineRule('max', max);
+
+// 讀取外部的資源檔案-中文字(zh_TW.json)
+loadLocaleFromURL('./zh_TW.json');
+// Activate the locale 激活語言環境(設定檔案)
+configure({
+	// 切換成中文版
+  generateMessage: localize('zh_TW'),
+	// 調整驗證方式(輸入文字時，立即驗證；原先要離開input才驗證)
+  validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
+});
 const apiUrl='https://vue3-course-api.hexschool.io/v2';
 const apiPath = 'ldddl';
 
-const app = createApp({
+const app = Vue.createApp({
   data() {
     return {
       cartData:{},
@@ -10,6 +31,11 @@ const app = createApp({
       productId:'',
       isLoadingItem:'', // 局部讀取效果:點擊該品項後，幾秒內按鈕無法再次被點擊
     }
+  },
+  components: {
+    VForm: Form,
+    VField: Field,
+    ErrorMessage: ErrorMessage,
   },
   methods: {
     getProduct(){
