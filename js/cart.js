@@ -111,6 +111,7 @@ const app = Vue.createApp({
       });
     },
     clearCart(){
+      // 清除購物車
       console.log('clearCart()');
       axios.delete(`${apiUrl}/api/${apiPath}/carts`)
       .then((result) => {
@@ -119,6 +120,11 @@ const app = Vue.createApp({
       }).catch((err) => {
         console.log(err);
       });
+    },
+    pushForm(){
+      this.clearCart();
+      this.$refs.form.resetForm();
+      alert('送出表單');
     }
   },
   mounted() {

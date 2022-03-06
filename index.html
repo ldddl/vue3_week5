@@ -96,12 +96,16 @@
           </table>
           <!-- 購物車列表 -->
           <div class="text-end">
-            <button class="btn btn-outline-danger" type="button" @click="clearCart()">
+            <button class="btn btn-outline-danger" type="button" 
+            @click="clearCart()"
+            :disabled="!cartData.carts?.length > 0">
+            <!-- :disabled="cartData.carts?.length>0" -->
+            <!-- {{cartData.carts?.length}} -->
               清空購物車
             </button>
           </div>
           <div>
-            <!-- {{ cartData }} -->
+            <!-- {{ cartData.carts?.length }} -->
             <!-- {{ cartData.carts }} -->
           </div>
           <table class="table align-middle">
@@ -234,8 +238,9 @@
               <textarea id="message" class="form-control" cols="30" rows="10" ></textarea>
             </div>
             <div class="text-end">
-              <button type="submit" class="btn btn-danger"
-                      >送出訂單</button>
+              <button type="button" class="btn btn-danger"
+              :disabled="Object.keys(errors).length > 0 || cartData.carts?.length === 0"
+              @click="pushForm">送出訂單</button>
             </div>
           </v-form>
         </div>
